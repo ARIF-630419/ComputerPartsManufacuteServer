@@ -14,12 +14,18 @@ async function run() {
     try {
         await client.connect();
         const partsCollection = client.db('ComputerParts').collection('Parts');
+        const orderCollection = client.db('ComputerParts').collection('Orders');
 
         app.get('/parts', async (req, res) => {
             const query = {};
             const cursor = partsCollection.find(query);
             const parts = await cursor.toArray();
             res.send(parts);
+        })
+        app.post('/order', async (req, res) => {
+            const orders = req.body;
+            const result = await orderCollection.insertOne(orders);
+            res.send({ success: true, result })
         })
 
 
