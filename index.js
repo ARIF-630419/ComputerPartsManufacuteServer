@@ -32,13 +32,18 @@ async function run() {
         const partsCollection = client.db('ComputerParts').collection('Parts');
         const orderCollection = client.db('ComputerParts').collection('Orders');
         const userCollection = client.db('ComputerParts').collection('users');
+        const reviewsCollection = client.db('ComputerParts').collection('reviews');
 
+
+        // parts api
         app.get('/parts', async (req, res) => {
             const query = {};
             const cursor = partsCollection.find(query);
             const parts = await cursor.toArray();
             res.send(parts);
         })
+
+        // order api
         app.get('/order', verifyJWT, async(req, res) =>{
             const email = req.query.email;
             const decodedEmail = req.decoded.email;
@@ -64,11 +69,13 @@ async function run() {
             const result = await orderCollection.deleteOne(query);
             res.send(result);
         });
+
+        // user api
         app.get('/user',verifyJWT,async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users);
           });
-          
+
           app.get('/admin/:email', async(req, res) =>{
             const email = req.params.email;
             const user = await userCollection.findOne({email: email});
@@ -106,6 +113,19 @@ async function run() {
             res.send({ result, token });
           })
 
+
+          // reviews api
+          app.get("/reviews", async (req, res) => {
+            const query = {};
+            const cursor = reviewsCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        })
+          app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await reviewsCollection.insertOne(review);
+            res.send(result);
+        });
 
     }
     finally {
