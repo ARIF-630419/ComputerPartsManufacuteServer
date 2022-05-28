@@ -33,6 +33,7 @@ async function run() {
         const orderCollection = client.db('ComputerParts').collection('Orders');
         const userCollection = client.db('ComputerParts').collection('users');
         const reviewsCollection = client.db('ComputerParts').collection('reviews');
+        const profileCollection = client.db('ComputerParts').collection('profile');
 
 
         // parts api
@@ -143,6 +144,12 @@ async function run() {
             const result = await reviewsCollection.insertOne(review);
             res.send(result);
         });
+
+        app.post('/MyProfile', async (req, res) => {
+            const myProfile = req.body;
+            const result = await profileCollection.insertOne(myProfile);
+            res.send(result);
+        })
 
     }
     finally {
