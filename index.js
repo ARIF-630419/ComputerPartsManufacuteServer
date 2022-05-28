@@ -42,6 +42,11 @@ async function run() {
             const parts = await cursor.toArray();
             res.send(parts);
         })
+        app.post('/parts', async (req, res) => {
+            const newParts = req.body;
+            const result = await partsCollection.insertOne(newParts);
+            res.send(result);
+        });
 
         // order api
         app.get('/order', verifyJWT, async(req, res) =>{
