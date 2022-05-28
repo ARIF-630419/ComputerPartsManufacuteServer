@@ -49,6 +49,12 @@ async function run() {
         });
 
         // order api
+        app.get("/allorder", async (req, res) => {
+            const query = {};
+            const cursor = orderCollection.find(query);
+            const stores = await cursor.toArray();
+            res.send(stores);
+        })
         app.get('/order', verifyJWT, async(req, res) =>{
             const email = req.query.email;
             const decodedEmail = req.decoded.email;
