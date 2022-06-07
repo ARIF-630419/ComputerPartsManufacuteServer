@@ -2,12 +2,12 @@
 
 Live website link: [https://computer-parts-manufacture.web.app/]
 
-## Feature
-* cors
-* Mongodb
-* express
-* jwt
-* dotenv
+## Features
+* Parts can be added to any parts database through post api.
+* The parts delete api allows you to delete any one of the parts from the database via id.
+* Multiple orders can be saved in the database through allorders get api.
+* Multiple reviews can be saved in the database through reviews get api.
+* Profile can be added to any MyProfile database through post api.
 
 In the project directory, you can run:
 
